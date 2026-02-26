@@ -250,13 +250,13 @@ function handleAnswer(selectedOption, buttonElement) {
         streak += 1;
         scoreInCurrentLevel += 1;
 
-        // Give a standard fish
+        // Always give a standard fish + sound on correct answer
+        playFishSound();
+        addFishToAquarium(false);
+
+        // Bonus: give special dead fish on every 5-streak
         if (streak % 5 === 0) {
-            // Give special dead fish
             addFishToAquarium(true);
-            // Randomize the fish sound pitch
-            playFishSound();
-            addFishToAquarium(false);
         }
 
         advanceLevelCheck();
