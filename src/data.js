@@ -8,6 +8,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'The',
         englishWord: 'Boy',
+        hint: 'The prefix הַ (Ha) works just like "The" in English! It attaches directly to the front of a noun to make it specific.',
         options: ['The', 'In / At', 'To / For', 'From']
     },
     {
@@ -18,6 +19,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'In / At',
         englishWord: 'House',
+        hint: 'The prefix בּ (B\' or Ba) means "In", "At", or "With". It hugs the word right at the beginning to show location!',
         options: ['In / At', 'The', 'And', 'From']
     },
     {
@@ -28,6 +30,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'To / For',
         englishWord: 'Dog',
+        hint: 'The prefix ל (L\' or La) means "To" or "For". Just stick it on the front of a word to point toward something!',
         options: ['To / For', 'From', 'The', 'In / At']
     },
     {
@@ -38,6 +41,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'From',
         englishWord: 'Book',
+        hint: 'The prefix מִ (Mi) means "From". It\'s a tiny shortcut instead of writing the full word מן (Min).',
         options: ['From', 'The', 'And', 'To / For']
     },
     {
@@ -48,6 +52,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'And',
         englishWord: 'Peace',
+        hint: 'The prefix וְ (V\' or U) means "And". It joins words together and is always attached to the front of the second word.',
         options: ['And', 'To / For', 'The', 'From']
     },
 
@@ -60,6 +65,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'My',
         englishWord: 'Book',
+        hint: 'The suffix ִי (-ee) means "My". Add it to the end of a noun to claim it as your own!',
         options: ['My', 'Your (masc)', 'His', 'Our']
     },
     {
@@ -70,6 +76,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'Your (masc)',
         englishWord: 'Dog',
+        hint: 'The suffix ךָ (-kha) means "Your" when talking to a boy or a man. It tags onto the end of a noun.',
         options: ['Your (masc)', 'My', 'His', 'Her']
     },
     {
@@ -80,6 +87,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'His',
         englishWord: 'Cat',
+        hint: 'The suffix וֹ (-o) means "His". Hook it to the end of a noun to show that it belongs to him!',
         options: ['His', 'Our', 'My', 'Your (masc)']
     },
     {
@@ -90,6 +98,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'Our',
         englishWord: 'House',
+        hint: 'The suffix נוּ (-nu) means "Our". We put it at the end of a word when something belongs to all of us.',
         options: ['Our', 'Her', 'My', 'Your (masc)']
     },
     {
@@ -100,6 +109,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'Her',
         englishWord: 'Mother',
+        hint: 'The suffix הּ (-ah) means "Her". Attach it to the end of a word to show that it belongs to her!',
         options: ['Her', 'His', 'My', 'Our']
     },
 
@@ -112,6 +122,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'I (Past)',
         englishWord: 'Walk',
+        hint: 'The suffix תִּי (-ti) is placed at the end of a verb to magically trap it in the past, meaning "I did it".',
         options: ['I (Past)', 'You (Future)', 'He (Future)', 'We (Past)']
     },
     {
@@ -122,6 +133,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'You / She (Future)',
         englishWord: 'Walk',
+        hint: 'The prefix ת (T) jumps on the front of a verb to talk about the future, meaning "You will" or "She will".',
         options: ['You / She (Future)', 'I (Past)', 'He (Future)', 'We (Future)']
     },
     {
@@ -132,6 +144,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'He (Future)',
         englishWord: 'Walk',
+        hint: 'The prefix י (Y) launches a verb into the future—specifically for a guy! It means "He will".',
         options: ['He (Future)', 'I (Past)', 'We (Future)', 'You (Past)']
     },
     {
@@ -142,6 +155,7 @@ export const GAME_DATA = [
         isPrefix: true,
         correctMeaning: 'We (Future)',
         englishWord: 'Walk',
+        hint: 'The prefix נ (N) is a team player! At the front of a verb, it points to the future and means "We will".',
         options: ['We (Future)', 'He (Future)', 'I (Past)', 'They (Future)']
     },
     {
@@ -152,6 +166,7 @@ export const GAME_DATA = [
         isPrefix: false,
         correctMeaning: 'We (Past)',
         englishWord: 'Eat',
+        hint: 'The suffix נוּ (-nu) grabs a verb and pulls it into the past for a group. It means "We did it"!',
         options: ['We (Past)', 'I (Past)', 'They (Past)', 'He (Future)']
     }
 ];

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="app-container">
         <header>
@@ -26,7 +28,17 @@
 
         <main class="game-area">
             <div class="question-card" id="question-card">
+                <div class="question-header">
+                    <button id="hint-btn" class="hint-btn" aria-label="Show Hint">?</button>
+                </div>
                 <h2 id="hebrew-word" dir="rtl"></h2>
+                <div id="hint-overlay" class="hint-overlay hidden">
+                    <div class="hint-content">
+                        <h3>Hint!</h3>
+                        <p id="hint-text"></p>
+                        <button id="close-hint-btn">Got it</button>
+                    </div>
+                </div>
                 <p class="instruction">What does the <span class="highlight-text">highlighted</span> part indicate?</p>
             </div>
 
@@ -38,4 +50,5 @@
 
     <script type="module" src="src/game.js"></script>
 </body>
+
 </html>

@@ -16,6 +16,20 @@ const aquarium = document.getElementById('aquarium');
 const wordContainer = document.getElementById('hebrew-word');
 const optionsGrid = document.getElementById('options-grid');
 
+// Hint UI elements
+const hintBtn = document.getElementById('hint-btn');
+const hintOverlay = document.getElementById('hint-overlay');
+const closeHintBtn = document.getElementById('close-hint-btn');
+const hintText = document.getElementById('hint-text');
+
+// Event listeners for hints
+hintBtn.addEventListener('click', () => {
+    hintOverlay.classList.remove('hidden');
+});
+closeHintBtn.addEventListener('click', () => {
+    hintOverlay.classList.add('hidden');
+});
+
 const SILLY_FISH_IMGS = [
     'assets/realistic_party_fish_1.png',
     'assets/realistic_party_fish_2.png',
@@ -135,6 +149,9 @@ function renderQuestion() {
         wordContainer.after(meaningP);
     }
     meaningP.textContent = `(${currentQuestion.englishWord})`;
+
+    // Populate hint text
+    hintText.textContent = currentQuestion.hint;
 
     // Render options
     optionsGrid.innerHTML = '';
