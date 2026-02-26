@@ -1,5 +1,5 @@
 import { GAME_DATA } from './data.js';
-import { addFish, addMilestoneFish, burstBubbles } from './water.js';
+import { addFish, addMilestoneFish, burstBubbles, triggerSpectacular } from './water.js';
 
 let score = 0;
 let streak = 0;
@@ -167,6 +167,11 @@ function awardFish() {
     if (streak % 5 === 0) {
         addFish(FISH_SPECIAL, 55);
         burstBubbles(10);
+    }
+
+    // SPECTACULAR EVENT every 5 correct answers!
+    if (totalCorrect % 5 === 0 && totalCorrect > 0) {
+        triggerSpectacular();
     }
 
     // Milestone rewards based on total correct
