@@ -1,4 +1,5 @@
 import { GAME_DATA } from './data.js';
+import { burstBubbles } from './water.js';
 
 let score = 0;
 let streak = 0;
@@ -167,20 +168,6 @@ function renderQuestion() {
     });
 }
 
-// --- Bubble particles ---
-function createBubble() {
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    const size = 5 + Math.random() * 10;
-    bubble.style.width = `${size}px`;
-    bubble.style.height = `${size}px`;
-    const rect = aquarium.getBoundingClientRect();
-    bubble.style.left = `${Math.random() * (rect.width - size)}px`;
-    const duration = 2 + Math.random() * 3;
-    bubble.style.setProperty('--duration', `${duration}s`);
-    aquarium.appendChild(bubble);
-    setTimeout(() => { if (bubble.parentElement) bubble.remove(); }, duration * 1000);
-}
 
 // --- Fish swimming system (JS-driven) ---
 const swimFish = []; // Array to track all swimming fish
@@ -267,10 +254,8 @@ function addFishToAquarium(isSpecial) {
         size: fishSize
     });
 
-    // Create a burst of bubbles when dropped
-    for (let i = 0; i < 6; i++) {
-        setTimeout(createBubble, Math.random() * 800);
-    }
+    // Create a burst of bubbles on canvas when dropped
+    burstBubbles(8);
 }
 
 function advanceLevelCheck() {
