@@ -17,11 +17,11 @@ const wordContainer = document.getElementById('hebrew-word');
 const optionsGrid = document.getElementById('options-grid');
 
 const SILLY_FISH_IMGS = [
-    'assets/silly_fish_1.png',
-    'assets/silly_fish_2.png',
-    'assets/silly_fish_3.png'
+    'assets/realistic_party_fish_1.png',
+    'assets/realistic_party_fish_2.png',
+    'assets/realistic_party_fish_3.png'
 ];
-const DEAD_FISH_IMG = 'assets/special_dead_fish.png';
+const DEAD_FISH_IMG = 'assets/special_realistic_party_fish.png';
 
 // --- Synthesis for "Fishy / Bubble" sounds ---
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -149,21 +149,67 @@ function renderQuestion() {
     });
 }
 
+function createBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+
+    // Randomize size between 5px and 15px
+    const size = 5 + Math.random() * 10;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+
+    // Randomize horizontal position within aquarium bounds
+    const aquarRect = aquarium.getBoundingClientRect();
+    const leftPos = Math.random() * (aquarRect.width - size);
+    bubble.style.left = `${leftPos}px`;
+
+    // Randomize animation duration for varying speeds
+    const duration = 2 + Math.random() * 3;
+    bubble.style.setProperty('--duration', `${duration}s`);
+
+    aquarium.appendChild(bubble);
+
+    // Clean up bubble after animation
+    setTimeout(() => {
+        if (bubble.parentElement) {
+            bubble.remove();
+        }
+    }, duration * 1000);
+}
+
 function addFishToAquarium(isSpecial) {
     const img = document.createElement('img');
+    const aquarRect = aquarium.getBoundingClientRect();
+
     if (isSpecial) {
         img.src = DEAD_FISH_IMG;
-        img.className = 'fish special float-anim';
+        img.className = 'fish special';
     } else {
         const randomFish = SILLY_FISH_IMGS[Math.floor(Math.random() * SILLY_FISH_IMGS.length)];
         img.src = randomFish;
-        img.className = 'fish float-anim';
-        // random delay for floating so they don't sync
-        img.style.animationDelay = `${Math.random() * 2}s`;
+        img.className = 'fish';
     }
+
+    // Calculate random target positions for the drop within the aquarium bounds
+    // We leave some padding so they don't hit the very edges
+    const fishSize = isSpecial ? 65 : 50;
+    const maxX = aquarRect.width - fishSize - 10;
+    // We want them to drop near the bottom generally, but varied
+    const maxY = aquarRect.height - fishSize - (Math.random() * 40);
+
+    const targetX = 10 + Math.random() * maxX;
+
+    img.style.setProperty('--target-x', `${targetX}px`);
+    img.style.setProperty('--target-y', `${maxY}px`);
+    // Randomize starting animation offset for floating
+    img.style.animationDelay = `0s, ${-Math.random() * 5}s`;
+
     aquarium.appendChild(img);
-    // Scroll to bottom of aquarium to see new fish
-    aquarium.scrollTop = aquarium.scrollHeight;
+
+    // Create a burst of bubbles when dropped
+    for (let i = 0; i < 6; i++) {
+        setTimeout(createBubble, Math.random() * 800);
+    }
 }
 
 function advanceLevelCheck() {
