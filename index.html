@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hebrew Prefix & Suffix Hero</title>
+    <!-- Use Inter font for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="stats">
+                <span id="score-display">Score: 0</span>
+                <span id="streak-display" class="streak-badge">Streak: 0 🔥</span>
+                <span id="level-display">Level: 1</span>
+            </div>
+            <div class="aquarium-container">
+                <div class="aquarium-title">Your Catch</div>
+                <div class="aquarium" id="aquarium">
+                    <!-- Fish will appear here -->
+                </div>
+            </div>
+        </header>
+
+        <main class="game-area">
+            <div class="question-card" id="question-card">
+                <h2 id="hebrew-word" dir="rtl"></h2>
+                <p class="instruction">What does the <span class="highlight-text">highlighted</span> part indicate?</p>
+            </div>
+
+            <div class="options-grid" id="options-grid">
+                <!-- Options will be populated here by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="src/game.js"></script>
+</body>
+</html>
