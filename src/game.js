@@ -31,11 +31,12 @@ closeHintBtn.addEventListener('click', () => {
 });
 
 const SILLY_FISH_IMGS = [
-    'assets/realistic_party_fish_1.png',
-    'assets/realistic_party_fish_2.png',
-    'assets/realistic_party_fish_3.png'
+    'assets/fish_1.png',
+    'assets/fish_2.png',
+    'assets/fish_3.png',
+    'assets/fish_4.png'
 ];
-const DEAD_FISH_IMG = 'assets/special_realistic_party_fish.png';
+const DEAD_FISH_IMG = 'assets/fish_special.png';
 
 // --- Synthesis for "Fishy / Bubble" sounds ---
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -166,62 +167,105 @@ function renderQuestion() {
     });
 }
 
+// --- Bubble particles ---
 function createBubble() {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-
-    // Randomize size between 5px and 15px
     const size = 5 + Math.random() * 10;
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
-
-    // Randomize horizontal position within aquarium bounds
-    const aquarRect = aquarium.getBoundingClientRect();
-    const leftPos = Math.random() * (aquarRect.width - size);
-    bubble.style.left = `${leftPos}px`;
-
-    // Randomize animation duration for varying speeds
+    const rect = aquarium.getBoundingClientRect();
+    bubble.style.left = `${Math.random() * (rect.width - size)}px`;
     const duration = 2 + Math.random() * 3;
     bubble.style.setProperty('--duration', `${duration}s`);
-
     aquarium.appendChild(bubble);
-
-    // Clean up bubble after animation
-    setTimeout(() => {
-        if (bubble.parentElement) {
-            bubble.remove();
-        }
-    }, duration * 1000);
+    setTimeout(() => { if (bubble.parentElement) bubble.remove(); }, duration * 1000);
 }
+
+// --- Fish swimming system (JS-driven) ---
+const swimFish = []; // Array to track all swimming fish
+
+function pickWaypoint(fishSize) {
+    const rect = aquarium.getBoundingClientRect();
+    const padding = 10;
+    return {
+        x: padding + Math.random() * (rect.width - fishSize - padding * 2),
+        y: padding + 20 + Math.random() * (rect.height - fishSize - padding * 2 - 20) // avoid wave zone
+    };
+}
+
+function animateFish() {
+    swimFish.forEach(f => {
+        const dx = f.targetX - f.x;
+        const dy = f.targetY - f.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 2) {
+            // Reached waypoint, pick a new one
+            const wp = pickWaypoint(f.size);
+            f.targetX = wp.x;
+            f.targetY = wp.y;
+            // Randomize speed slightly
+            f.speed = 0.3 + Math.random() * 0.5;
+        } else {
+            // Move toward waypoint
+            const vx = (dx / dist) * f.speed;
+            const vy = (dy / dist) * f.speed;
+            f.x += vx;
+            f.y += vy;
+
+            // Flip fish based on direction
+            const angle = Math.atan2(vy, vx) * (180 / Math.PI);
+            const scaleX = vx < 0 ? -1 : 1;
+            f.el.style.left = `${f.x}px`;
+            f.el.style.top = `${f.y}px`;
+            f.el.style.transform = `scaleX(${scaleX}) rotate(${angle * 0.15}deg)`;
+        }
+    });
+    requestAnimationFrame(animateFish);
+}
+requestAnimationFrame(animateFish);
 
 function addFishToAquarium(isSpecial) {
     const img = document.createElement('img');
-    const aquarRect = aquarium.getBoundingClientRect();
+    const rect = aquarium.getBoundingClientRect();
 
     if (isSpecial) {
         img.src = DEAD_FISH_IMG;
-        img.className = 'fish special';
+        img.className = 'fish special entering';
     } else {
         const randomFish = SILLY_FISH_IMGS[Math.floor(Math.random() * SILLY_FISH_IMGS.length)];
         img.src = randomFish;
-        img.className = 'fish';
+        img.className = 'fish entering';
     }
 
-    // Calculate random target positions for the drop within the aquarium bounds
-    // We leave some padding so they don't hit the very edges
-    const fishSize = isSpecial ? 65 : 50;
-    const maxX = aquarRect.width - fishSize - 10;
-    // We want them to drop near the bottom generally, but varied
-    const maxY = aquarRect.height - fishSize - (Math.random() * 40);
+    const fishSize = isSpecial ? 70 : 55;
+    // Start from a random X at the top
+    const startX = 10 + Math.random() * (rect.width - fishSize - 20);
+    const startY = 30 + Math.random() * (rect.height - fishSize - 40);
 
-    const targetX = 10 + Math.random() * maxX;
-
-    img.style.setProperty('--target-x', `${targetX}px`);
-    img.style.setProperty('--target-y', `${maxY}px`);
-    // Randomize starting animation offset for floating
-    img.style.animationDelay = `0s, ${-Math.random() * 5}s`;
+    img.style.left = `${startX}px`;
+    img.style.top = `${startY}px`;
+    img.style.opacity = '1';
 
     aquarium.appendChild(img);
+
+    // Remove 'entering' class after splash animation finishes
+    setTimeout(() => {
+        img.classList.remove('entering');
+    }, 800);
+
+    // Register in the swim system
+    const wp = pickWaypoint(fishSize);
+    swimFish.push({
+        el: img,
+        x: startX,
+        y: startY,
+        targetX: wp.x,
+        targetY: wp.y,
+        speed: 0.3 + Math.random() * 0.5,
+        size: fishSize
+    });
 
     // Create a burst of bubbles when dropped
     for (let i = 0; i < 6; i++) {
